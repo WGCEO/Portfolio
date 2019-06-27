@@ -1,6 +1,6 @@
 # Portfolio
 The portfolio only represent only for creating new UX technologies.
-Also I've made these technologies by myself.
+Also I've made these technologies on my own.
 
 
 ## 1. PianoEffect
@@ -359,3 +359,66 @@ func revertPlaceholder(textView: TypingTextView) {
 
 ```
 ![](revertPlaceholder.gif)
+
+
+이거 두번째에 넣기
+## 1. magnifying glass
+![](pianoEffect.gif)
+:mag: Type faster, reduce typo. That's what magnifying glass do.
+Reflecting and magnifying your paragraph currently typing, and also you can tap this magnifying view for edit typo.
+You can typing and fix typo quickly.
+
+
+### Why
+- Distance between cursor and keboard makes typo frequently.
+- Uncomfortable when edting text.
+- The character size is too small to edit.
+
+### How
+- Remove distance.
+- Enlarge text size for editing text easily.
+
+
+### What
+- Show currently tying paragraph on keyboard.
+- enable to edit character on magnifying view by tapping.
+
+![](PianoEffect/domain.png)
+
+
+### Getting Started
+
+1. In textView delegate textViewChangeSelection, get current paragrapgh and set to the magnifying view.
+
+```swift
+let paragraphRange = (textView.text as NSString).paragraphRange(for: textView.selectedRange)
+let attrText = getAttrTextForMagnifyingText(from: textView, inRange: paragraphRange)
+setAttrText(attrText)
+```
+
+2. Set scroll offset.
+```swift
+let frontRange = NSMakeRange(0, textView.selectedRange.location - paragraphRange.location)
+let frontWidth = attrText.attributedSubstring(from: frontRange).size().width
+setScrollOffset(by: frontWidth)
+setCursorViewLocation(by: frontWidth)
+```
+
+3. Allows to response the tap and sync with textView.
+```swift
+@IBAction func tap(_ sender: UITapGestureRecognizer) {
+	let touch = sender.location(in: self)
+	guard let glyphIndex = mfLabel.getGlyphIndex(from: touch),
+	let textView = self.textView,
+	let attrText = mfLabel.attributedText,
+	attrText.length != 0
+		else { return }
+
+	let cursorIndex = touch.x < 0 ? glyphIndex : glyphIndex + 1
+	let frontAttrText = attrText.attributedSubstring(from: NSMakeRange(0, cursorIndex))
+	let frontAttrTextWidth = frontAttrText.size().width
+        
+	setCursorViewLocation(by: frontAttrTextWidth)
+	setTextViewSelectedRange(textView: textView, byFrontText: frontAttrText.string, byCursorIndex: cursorIndex)
+    }
+```
