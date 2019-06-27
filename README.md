@@ -32,7 +32,7 @@ https://itunes.apple.com/app/id1436948695
 
 2. The domains of a function, in charge of making the texts to pop, are defined as a distance from the touch point to the end of a text.
 	- x = abs(touchX - characterX)
-![](PianoEffect/domain.png)
+![](domain.png)
 
 3. In order to make text pop action smooth, the functions for Cosine and constant are defined according to its domains.
 	- y = a(cos(PI * x / b) + 1) * p { x < b }
@@ -94,7 +94,7 @@ private func setAttributes(with addRanges: [NSRange], removeRanges: [NSRange) {
 	}
 }
 ```
-## License
+### License
 ![](patentsAll.png)
 - Jan, 2017 Patent applied in South Korea
 - Oct, 2018 Patent registered in South Korea
@@ -102,7 +102,71 @@ private func setAttributes(with addRanges: [NSRange], removeRanges: [NSRange) {
 - Nov, 2018 Patent applied in China
 
 </br></br></br></br>
-## 2. FastestTextView
+## 2. magnifying glass
+![](magnifyingThree.gif)
+:mag: Type faster, reduce typo. That's what magnifying glass do.
+Reflecting and magnifying your paragraph currently typing, and also you can tap this magnifying view for edit typo.
+You can typing and fix typo quickly.
+
+### Why
+- Distance between cursor and keboard makes typo frequently.
+- Uncomfortable when edting text.
+- The character size is too small to edit.
+
+### How
+- Remove distance.
+- Enlarge text size for editing text easily.
+
+
+### What
+- Show currently tying paragraph on keyboard.
+- enable to edit character on magnifying view by tapping.
+
+![](magnifying.png)
+
+### Getting Started
+
+1. In textView delegate textViewChangeSelection, get current paragrapgh and set to the magnifying view.
+
+```swift
+let paragraphRange = (textView.text as NSString).paragraphRange(for: textView.selectedRange)
+let attrText = getAttrTextForMagnifyingText(from: textView, inRange: paragraphRange)
+setAttrText(attrText)
+```
+
+2. Set scroll offset.
+```swift
+let frontRange = NSMakeRange(0, textView.selectedRange.location - paragraphRange.location)
+let frontWidth = attrText.attributedSubstring(from: frontRange).size().width
+setScrollOffset(by: frontWidth)
+setCursorViewLocation(by: frontWidth)
+```
+
+3. Allows to response the tap and sync with textView.
+```swift
+@IBAction func tap(_ sender: UITapGestureRecognizer) {
+	let touch = sender.location(in: self)
+	guard let glyphIndex = mfLabel.getGlyphIndex(from: touch),
+	let textView = self.textView,
+	let attrText = mfLabel.attributedText,
+	attrText.length != 0
+		else { return }
+
+	let cursorIndex = touch.x < 0 ? glyphIndex : glyphIndex + 1
+	let frontAttrText = attrText.attributedSubstring(from: NSMakeRange(0, cursorIndex))
+	let frontAttrTextWidth = frontAttrText.size().width
+        
+	setCursorViewLocation(by: frontAttrTextWidth)
+	setTextViewSelectedRange(textView: textView, byFrontText: frontAttrText.string, byCursorIndex: cursorIndex)
+    }
+```
+![](magnifyingScreens.png)
+### License
+![](magnifyPatents.png)
+- Oct, 2017 Patent applied in South Korea
+
+</br></br></br></br>
+## 3. FastestTextView
 ![](features.gif)<br/><br/>
 :zap:FastestTextView is the Fastest TextView rendering  tml/rtfd and also it reduces data size to less than half. 
 It owns new data structure itself and it makes textview fast whether document size is so big.
@@ -171,7 +235,7 @@ enum BlockType {
 - It uses a lot of String type and [String] type functions for performance like joined(separator:), components(separatedBy:)
 
 </br></br></br></br>
-## 3. EmojiChecklist
+## 4. EmojiChecklist
 
 :metal: Emoji Checklist let user accomplish their todo delightfully. User can choose todo and done emojies what they want. And Also User can choose the shortcut. 
 Finally when user tap checklist, it'll be ordered automatically.
@@ -277,7 +341,7 @@ case .done:
 ```
 ![](3to4Checklist.gif)<br/>
 </br></br></br></br>
-## 4. Placeholder
+## 5. Placeholder
 
 :feet: Placeholder is a technology for creating custom templates by user.
 User can create a templates that are not exist on built in template, and even User can modify template in exist template categories.<br/><br/>
@@ -359,66 +423,3 @@ func revertPlaceholder(textView: TypingTextView) {
 
 ```
 ![](revertPlaceholder.gif)
-
-
-이거 두번째에 넣기
-## 1. magnifying glass
-![](pianoEffect.gif)
-:mag: Type faster, reduce typo. That's what magnifying glass do.
-Reflecting and magnifying your paragraph currently typing, and also you can tap this magnifying view for edit typo.
-You can typing and fix typo quickly.
-
-
-### Why
-- Distance between cursor and keboard makes typo frequently.
-- Uncomfortable when edting text.
-- The character size is too small to edit.
-
-### How
-- Remove distance.
-- Enlarge text size for editing text easily.
-
-
-### What
-- Show currently tying paragraph on keyboard.
-- enable to edit character on magnifying view by tapping.
-
-![](PianoEffect/domain.png)
-
-
-### Getting Started
-
-1. In textView delegate textViewChangeSelection, get current paragrapgh and set to the magnifying view.
-
-```swift
-let paragraphRange = (textView.text as NSString).paragraphRange(for: textView.selectedRange)
-let attrText = getAttrTextForMagnifyingText(from: textView, inRange: paragraphRange)
-setAttrText(attrText)
-```
-
-2. Set scroll offset.
-```swift
-let frontRange = NSMakeRange(0, textView.selectedRange.location - paragraphRange.location)
-let frontWidth = attrText.attributedSubstring(from: frontRange).size().width
-setScrollOffset(by: frontWidth)
-setCursorViewLocation(by: frontWidth)
-```
-
-3. Allows to response the tap and sync with textView.
-```swift
-@IBAction func tap(_ sender: UITapGestureRecognizer) {
-	let touch = sender.location(in: self)
-	guard let glyphIndex = mfLabel.getGlyphIndex(from: touch),
-	let textView = self.textView,
-	let attrText = mfLabel.attributedText,
-	attrText.length != 0
-		else { return }
-
-	let cursorIndex = touch.x < 0 ? glyphIndex : glyphIndex + 1
-	let frontAttrText = attrText.attributedSubstring(from: NSMakeRange(0, cursorIndex))
-	let frontAttrTextWidth = frontAttrText.size().width
-        
-	setCursorViewLocation(by: frontAttrTextWidth)
-	setTextViewSelectedRange(textView: textView, byFrontText: frontAttrText.string, byCursorIndex: cursorIndex)
-    }
-```
