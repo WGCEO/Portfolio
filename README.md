@@ -1,26 +1,26 @@
 # Portfolio
-The portfolio only represent only for creating new UX technologies.
-Also I've made these technologies on my own.
+This portfolio introduces and describes the new UX technologies that i've created on my own.
+The contents will be focused on the UX technologies only.
 
 
 ## 1. PianoEffect
 
 ![](pianoEffect.gif)
 
-:musical_keyboard: Piano Effect is a new way for editing text naturally on TextView. It allows you to edit text easily and gracefully. As soon as you touch a text, the text jumps up like a wave, the text that move along the cosign graph make us feel playing piano. You can edit it at the same time you swipe it to the right. If you want to erase the attributes what you add, just swipe left. And also you can check the character that you are selecting currently by character's opacity. You can customize attribute like font, color, line, shadow and so on.Even if you can copy/cut operation using piano Effect.
+:musical_keyboard: Piano Effect is a new way of editing text naturally on TextView. It allows users to edit text easily and gracefully. As soon as a finger touches a text, the letters of text will make a wave motion in a Cosine graph, which gives users the feeling of playing piano. The text can be edited when swiped to the right. User can simple swipe left to erase any attributes. If user wants to erase the attributes what they add, just swipe left. Also, user knows the character what they are selecting by character's opacity. You can customize attributes such as font, colo,r line, shadow and more. Also you can copy/cut operation using piano Effect.
 
 ### Why
 
-- uncomfortable for editing text on touch screen.
+- It is inconvenient to edit text on touch screen.
 
 ### How
 
-- Make it comfortable and natural
+- Text editing should be done in comfortable and natural way
 
 ### What
 
-- Allows you to highlight any text just as you would do on a paper.
-- Not limited to highlighting, you can edit any text attributes.
+- Allows users to highlight any text just as they would do it on a paper.
+- Not limited to highlighting, users can edit any text attributes.
 
 ![](patentImages.png)
 
@@ -42,9 +42,8 @@ https://itunes.apple.com/app/id1436948695
 	> a: maxHeight of popping text</br>
 	> p: progress of floating text
 ![](func.png)
-- By applying the above function expression, you can change the height at which the text bounces according to the movement of the touch.
 
-4. There are three core logics to implement this.
+4. There are three core logics to implement Piano Effect.
 
 - Get text line information which text line includes the touch point.
 
@@ -60,7 +59,7 @@ private func lineInfo(at touch: Touch) -> (CGRect, NSRange, NSAttributedString)?
 	return (lineRect, lineRange, attrText)
 }
 ```
-- Depending on the touch, the text is animated according to the above function expression, and the coordinates to edit text are calculated.
+- the text is animated according to the above function, and the ranges for editing are calculated.
 ```swift
 private func move(_ label: PianoLabel, by touchX: CGFloat) {
 	guard let data = label.data else { return }
@@ -81,7 +80,7 @@ private func move(_ label: PianoLabel, by touchX: CGFloat) {
 }
 ```
 
-- When you release your finger, you will get the coordinates to add / delete effect and give it to the text view.
+- When user release fingers, you will get the ranges to add / delete effect and give it to the textview.
 ```swift
 private func setAttributes(with addRanges: [NSRange], removeRanges: [NSRange) {
 	for addRange in unionAddRange {
@@ -96,37 +95,36 @@ private func setAttributes(with addRanges: [NSRange], removeRanges: [NSRange) {
 ```
 ### License
 ![](patentsAll.png)
-- Jan, 2017 Patent applied in South Korea
-- Oct, 2018 Patent registered in South Korea
-- Nov, 2018 Patent applied in USA
-- Nov, 2018 Patent applied in China
+- Patent applied in South Korea(January 2017)
+- Patent registered in South Korea(October 2018)
+- Patent applied in USA(November 2018)
+- Patent applied in China(November 2018)
 
 </br></br></br></br>
 ## 2. magnifying glass
 ![](magnifyingThree.gif)
 :mag: Type faster, reduce typo. That's what magnifying glass do.
-Reflecting and magnifying your paragraph currently typing, and also you can tap this magnifying view for edit typo.
-You can typing and fix typo quickly.
+It reflects and magnifies the paragraphs that user currently type, and also user can tap this magnifying view to edit typo.
+User can type and fix typo quicker than ever.
 
 ### Why
-- Distance between cursor and keboard makes typo frequently.
-- Uncomfortable when edting text.
-- The character size is too small to edit.
+- Distance between the cursor and keyboard produces frequent typos.
+- The character size is too small to tap typos and to fix it.
 
 ### How
-- Remove distance.
+- Remove distance between the cursor and keyboard.
 - Enlarge text size for editing text easily.
 
 
 ### What
 - Show currently tying paragraph on keyboard.
-- enable to edit character on magnifying view by tapping.
+- enable to correct typos by tapping text on magnifying view.
 
 ![](magnifying.png)
 
 ### Getting Started
 
-1. In textView delegate textViewChangeSelection, get current paragrapgh and set to the magnifying view.
+1. In textView delegate textViewChangeSelection, get current paragrapgh's attributed text and set to the magnifying view.
 
 ```swift
 let paragraphRange = (textView.text as NSString).paragraphRange(for: textView.selectedRange)
@@ -163,39 +161,38 @@ setCursorViewLocation(by: frontWidth)
 ![](magnifyingScreens.png)
 ### License
 ![](magnifyPatents.png)
-- Oct, 2017 Patent applied in South Korea
+- Patent applied in South Korea(October, 2017)
 
 </br></br></br></br>
 ## 3. FastestTextView
 ![](features.gif)<br/><br/>
-:zap:FastestTextView is the Fastest TextView rendering  tml/rtfd and also it reduces data size to less than half. 
-It owns new data structure itself and it makes textview fast whether document size is so big.
-Even if it gives you easy and fast way to edit text by easy gesture.
+:zap:FastestTextView is the Fastest TextView rendering html/rtfd and also it reduces data size to less than half. 
+It owns new data structure itself and it makes textview fast even if document size is too big.
+Also it gives you easy and fast way to edit text by easy gesture.
 
 ### Why
-- When the documents being loaded, rendered,  typed and edited by user,
 - TextView makes a lot of performance issues. It makes transitioning, rendering, typing, editing slowly.
-- It makes feel annoying to user and User cannot produce on their document in Mobile environment.
+- It provides inconvience to users for editing documents in mobile environment.
 
 ### How
-- To reduce Memory Usage, Create a New Data Structure for documents.
-- To make it faster, Recreate a New TextView.
+- To reduce memory usage, create a new data structure for documents.
+- To make it faster, rcreate a new textView.
 
 ### What
-- Use String Type for represent all document’s data.
-- String type can use a lot of great performance functions
+- Use string type to represent document’s all data.
+- Use String type functions for great performance.
 
 ### Result
 1. Reduce document data memory
 ![](sizePerformance.png)<br/>
-FastestTextView convert NSAttributedString to Custom String Type.
+FastestTextView convert NSAttributedString to custom String type.
 - It is half the size of rtf (48%)
 - It is one third of rtfd's size (36%)
 - It is one sixth of html's size (16%)
 
 2. Always be fast
 ![](loadingTime2.png)<br/>
-- whether document is big size, always be fast.
+- Even if the document size is big, loading, typing time would always be fast.
 
 ### Getting Started
 
@@ -205,7 +202,7 @@ FastestTextView convert NSAttributedString to Custom String Type.
 2. To convert user’s NSAttributedString to String, Make a block per one paragraph. Block can be a string and it can represent all attributes for text.
 ![](blockStructure.png)<br/>
 
-3. To create a fast and interactive textview, It inherits UITabieView, and each cells get one paragraph. 
+3. To create a fast and interactive textview, It inherits UITabieView, and each cell has only one paragraph. 
 
 4. It is implemented all features of UITextView and more.
 Built in
@@ -237,7 +234,7 @@ enum BlockType {
 </br></br></br></br>
 ## 4. EmojiChecklist
 
-:metal: Emoji Checklist let user accomplish their todo delightfully. User can choose todo and done emojies what they want. And Also User can choose the shortcut. 
+:metal: Emoji Checklist lets user accomplish their to-dos delightfully. User can choose to-dos and pick emojies what they want. And Also User can choose the shortcut. 
 Finally when user tap checklist, it'll be ordered automatically.
 
 ### Why
@@ -247,7 +244,7 @@ Finally when user tap checklist, it'll be ordered automatically.
 - Using Key value system and detect it by regex.
 ## What
 - Define three cases, key, value, shortcut
-- Detect whether User typing shortcut for creating checklist in TextViewDidChange delgate.
+- Detect whether User typing shortcut for creating checklist in TextViewDidChange delegate.
 - Detect whether user typing backspace for deleting checklist in TextShouldChange delegate.
 
 ### Getting Started
@@ -263,7 +260,7 @@ enum BulletType {
 }
 ```
 ![](customEmoji.png)
-3. Using regex, Check whether exsiting key or not, and if exist, check whether todo or done.
+3. Using regex, you can check whether existing key or not, and if exist, you can check it whether todo or done.
 ```swift
 
 var shortcutRegex: String {
@@ -315,7 +312,7 @@ func textView(_ textView: TextView, shouldChangeTextIn range: NSRange, replaceme
 ```
 ![](revertEmoji.gif)<br/>
 
-6. When user tap checklist, reordering datasource According to circumstances
+6. When user tap checklist, reordering datasource according to circumstances
 ```swift
 switch type {
 case .todo:
@@ -343,25 +340,24 @@ case .done:
 </br></br></br></br>
 ## 5. Placeholder
 
-:feet: Placeholder is a technology for creating custom templates by user.
-User can create a templates that are not exist on built in template, and even User can modify template in exist template categories.<br/><br/>
+:feet: Placeholder is a technology for user to create customized templates.
+User can create templates that are not exist on built in template, and even user can modify template in exist template categories.<br/><br/>
 ![](placeholderIntro.png)
 
 ### Why
-- Usually, There is no template user want in template categories.
-- Users want custom templates in template categories.
+- Users look for new templates, not what is given.
+- Users want customized templates in template categories.
 
 ### How
-- provide the method of creating and modifying templates.
+- provide the methods to create and modify templates.
 
 ### What
-- To create a template, Define a regex for each type's placeholder.
+- To create a template, define a regex for each type's placeholder.
 - When User type the specific keys for placeholders, it creates/deletes.
 
 ### Getting Started
-1. You can use an App for using Placeholder. Clone this project.
 
-2. Define a regex for shorcut which makes placeholder.<br/>
+1. Define a regex for shorcut which makes placeholder.<br/>
 ex) Placeholder$ <br/>
 ```swift
 struct PlaceholderShortcut {
