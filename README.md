@@ -183,7 +183,7 @@ Also it gives you easy and fast way to edit text by easy gesture.
 - Use String type functions for great performance.
 
 ### Result
-1. Reduce document data memory
+1. Reduce document data memory</br>
 ![](sizePerformance.png)<br/>
 FastestTextView convert NSAttributedString to custom String type.
 - It is half the size of rtf (48%)
