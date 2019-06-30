@@ -7,7 +7,7 @@ The contents will be focused on the UX technologies only.
 
 ![](pianoEffect.gif)
 
-:musical_keyboard: Piano Effect is a new way of editing text naturally on TextView. It allows users to edit text easily and gracefully. As soon as a finger touches a text, the letters of text will make a wave motion in a Cosine graph, which gives users the feeling of playing piano. The text can be edited when swiped to the right. User can simple swipe left to erase any attributes. If user wants to erase the attributes what they add, just swipe left. Also, user knows the character what they are selecting by character's opacity. You can customize attributes such as font, colo,r line, shadow and more. Also you can copy/cut operation using piano Effect.
+:musical_keyboard: Piano Effect is a new way of editing text naturally on TextView. It allows users to edit text easily and gracefully. As soon as a finger touches a text, the letters of text will make a wave motion in a Cosine graph, which gives users the feeling of playing piano. The texts can be edited when swiped to the right. Users can simply swipe left to erase any attributes. Also, users will be able to see the letters being selected through adjusted transparency of letters. Users can customize attributes such as font, color, line, shadow and more. Also, users can copy and cut texts using Piano Effect.
 
 ### Why
 
@@ -45,7 +45,7 @@ https://itunes.apple.com/app/id1436948695
 
 4. There are three core logics to implement Piano Effect.
 
-- Get text line information which text line includes the touch point.
+-Touching will retrieve text line information.
 
 ```swift
 private func lineInfo(at touch: Touch) -> (CGRect, NSRange, NSAttributedString)? {
@@ -59,7 +59,7 @@ private func lineInfo(at touch: Touch) -> (CGRect, NSRange, NSAttributedString)?
 	return (lineRect, lineRange, attrText)
 }
 ```
-- the text is animated according to the above function, and the ranges for editing are calculated.
+- The function above allows texts to be animated when touched, and the range of texts that is to be edited can be calculated. 
 ```swift
 private func move(_ label: PianoLabel, by touchX: CGFloat) {
 	guard let data = label.data else { return }
@@ -80,7 +80,7 @@ private func move(_ label: PianoLabel, by touchX: CGFloat) {
 }
 ```
 
-- When user release fingers, you will get the ranges to add / delete effect and give it to the textview.
+- When users release fingers, the ranges for add/delete effects will get delivered to the text view.
 ```swift
 private func setAttributes(with addRanges: [NSRange], removeRanges: [NSRange) {
 	for addRange in unionAddRange {
@@ -109,7 +109,7 @@ User can type and fix typo quicker than ever.
 
 ### Why
 - Distance between the cursor and keyboard produces frequent typos.
-- The character size is too small to tap typos and to fix it.
+- The character size is too small to edit.
 
 ### How
 - Remove distance between the cursor and keyboard.
@@ -117,14 +117,14 @@ User can type and fix typo quicker than ever.
 
 
 ### What
-- Show currently tying paragraph on keyboard.
-- enable to correct typos by tapping text on magnifying view.
+- Shows paragraph that is currently being typed on keyboard.
+- Corrects typos by tapping text with magnifying view.
 
 ![](magnifying.png)
 
 ### Getting Started
 
-1. In textView delegate textViewChangeSelection, get current paragrapgh's attributed text and set to the magnifying view.
+1. In textView delegate textViewDidChangeSelection, retrieve current paragrapgh attributed text and set to the magnifying view.
 
 ```swift
 let paragraphRange = (textView.text as NSString).paragraphRange(for: textView.selectedRange)
@@ -167,16 +167,16 @@ setCursorViewLocation(by: frontWidth)
 ## 3. FastestTextView
 ![](features.gif)<br/><br/>
 :zap:FastestTextView is the Fastest TextView rendering html/rtfd and also it reduces data size to less than half. 
-It owns new data structure itself and it makes textview fast even if document size is too big.
+It owns new data structure itself and makes textview fast even if document size is too big.
 Also it gives you easy and fast way to edit text by easy gesture.
 
 ### Why
-- TextView makes a lot of performance issues. It makes transitioning, rendering, typing, editing slowly.
+- TextView raises much issues in performance as it makes transitioning, rendering, typing, and editing actions slow.
 - It provides inconvience to users for editing documents in mobile environment.
 
 ### How
-- To reduce memory usage, create a new data structure for documents.
-- To make it faster, rcreate a new textView.
+- To reduce memory usage and create a new data structure for documents.
+- To make it faster recreate a new textView.
 
 ### What
 - Use string type to represent document’s all data.
@@ -192,17 +192,17 @@ FastestTextView convert NSAttributedString to custom String type.
 
 2. Always be fast
 ![](loadingTime2.png)<br/>
-- Even if the document size is big, loading, typing time would always be fast.
+- Even if the document size is big, text editing would always be fast.
 
 ### Getting Started
 
-1. You can download an App for using InteractiveTextView. https://itunes.apple.com/app/id1436948695 
+1. You can download an App for using InteractiveTextView. <br/>https://itunes.apple.com/app/id1436948695 
 ![](appStore.png)<br/>
 
 2. To convert user’s NSAttributedString to String, Make a block per one paragraph. Block can be a string and it can represent all attributes for text.
 ![](blockStructure.png)<br/>
 
-3. To create a fast and interactive textview, It inherits UITabieView, and each cell has only one paragraph. 
+3. To create a fast and interactive textview, It inherits UITabieView, and each cell has one paragraph. 
 
 4. It is implemented all features of UITextView and more.
 Built in
@@ -228,30 +228,29 @@ enum BlockType {
 ```
 
 ### More
-- Improve the performance of scrolling, it uses prefetch system.
-- It uses a lot of String type and [String] type functions for performance like joined(separator:), components(separatedBy:)
+- Datasource prefetching protocol is used to improve the performance of scrolling.
+- Use a lot of String & [String] type's functions for performance like joined(separator:), components(separatedBy:).
 
 </br></br></br></br>
 ## 4. EmojiChecklist
 
-:metal: Emoji Checklist lets user accomplish their to-dos delightfully. User can choose to-dos and pick emojies what they want. And Also User can choose the shortcut. 
-Finally when user tap checklist, it'll be ordered automatically.
+:metal: Emoji Checklist brings users delightful way of accomplishing their to-dos. Users can choose to-dos and pick emojis of their choice. And also, users can set shortcuts to create emoji. Finally, when users tap checklist, it'll be ordered automatically.
 
 ### Why
-- For Happy, Fun, Joy and Delight
+- For happy, fun, joy and delight.
 
 ### How
 - Using Key value system and detect it by regex.
 ## What
-- Define three cases, key, value, shortcut
-- Detect whether User typing shortcut for creating checklist in TextViewDidChange delegate.
-- Detect whether user typing backspace for deleting checklist in TextShouldChange delegate.
+- Define three cases, key, value, shortcut.
+- Detect whether typing shortcut for creating checklist.
+- Detect whether typing backspace for deleting checklist.
 
 ### Getting Started
 1. You can download an App for using PianoEffect. https://itunes.apple.com/app/id1436948695
 ![](emojiH.png)
 
-2. For Customize all everything like checklist or shortcut, define its key, value and shortcut.
+2. Keys, values, and shortcuts are defined to allow users to customize and utilize checklists and shortcuts. 
 ```swift
 enum BulletType {
         case key
@@ -260,7 +259,7 @@ enum BulletType {
 }
 ```
 ![](customEmoji.png)
-3. Using regex, you can check whether existing key or not, and if exist, you can check it whether todo or done.
+3. Key values can be checked for their existence using regex; if key value exists, its status will be checked whether it is to-do or done.
 ```swift
 
 var shortcutRegex: String {
@@ -276,7 +275,7 @@ var keyOffRegex: String {
 }   
 ```
 
-4. When typing, if an action for creating checklist is detected, Convert shortcut to checklist.
+4. The function then converts shortcuts to checklist when it detects action of creating the checklist is detected during typing.
 ```swift
 func textViewDidChange(_ textView: TextView) {
   if let regex = FormShortcut(text: textView.text),
@@ -286,7 +285,7 @@ func textViewDidChange(_ textView: TextView) {
 }
 ```
 ![](convertEmoji.gif)<br/>
-5. When typing, if an action for deleting checklist is detected, revert checklist to shortcut.
+5. The function reverts checklist shortcuts when it detects action of deleting the checklists.
 ```swift
 func textView(_ textView: TextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
@@ -312,7 +311,7 @@ func textView(_ textView: TextView, shouldChangeTextIn range: NSRange, replaceme
 ```
 ![](revertEmoji.gif)<br/>
 
-6. When user tap checklist, reordering datasource according to circumstances
+6. When users tap the checklist, datasource is reordered in accordance with specific situations.
 ```swift
 switch type {
 case .todo:
@@ -340,20 +339,19 @@ case .done:
 </br></br></br></br>
 ## 5. Placeholder
 
-:feet: Placeholder is a technology for user to create customized templates.
-User can create templates that are not exist on built in template, and even user can modify template in exist template categories.<br/><br/>
+:feet: Placeholder is a technology for users to create customized templates. Users can not only create brand new templates, but also modify existing templates.<br/><br/>
 ![](placeholderIntro.png)
 
 ### Why
 - Users look for new templates, not what is given.
-- Users want customized templates in template categories.
+- Users want customized templates that are already provided.
 
 ### How
 - provide the methods to create and modify templates.
 
 ### What
-- To create a template, define a regex for each type's placeholder.
-- When User type the specific keys for placeholders, it creates/deletes.
+- A regex for each type's placeholder is defined to create a template.
+- When users type specific key, textView delegate detects such behavior and converts to placeholder.
 
 ### Getting Started
 
@@ -384,7 +382,7 @@ struct PlaceholderShortcut {
 }
 ```
 
-2. Check whether user create placeholder in TextViewDidChange delegate, and if it does, convert to placeholder of its type..
+2. The function checks for user actions in creating placeholder in TextViewDidChange delegate. If such action is detected, it converts to placeholder of its type.
 ```swift
 if cell.placeholder == nil {
   if let placeholderShortcut = PlaceholderShortcut(text: textView.text) {
@@ -396,7 +394,7 @@ if cell.placeholder == nil {
 ```
 ![](convertPlaceholder.gif)
 
-3. Check whether user delete placehodler in TextShouldChange delegate, and it does, revert to shortcut of its type.
+3. If user deletes placeholder in TextShouldChange delegate, key values depending on its placeholder gets reverted. 
 ```swift
 func textView(_ textView: TextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
   if isBeginningPosition && text.isEmpty {
